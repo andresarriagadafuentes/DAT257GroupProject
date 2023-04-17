@@ -30,7 +30,7 @@ def drinkingFormula1(weight):
     if getWeightmesurement() == "kg":
         water = round((weight * 0.5 * 0.0295735296 * 2.20462262185), 1)
     else:
-        water = (weight * 0.5)
+        water = (weight * 0.5 * 2.2042)
     return water
 
 
