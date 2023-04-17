@@ -30,16 +30,20 @@
             <p>{{ message['content'] }}</p>
         </div>
     {% endfor %}
+
 {% endblock %}
-    <form action="#" method="post">
+    <form action="#" method="post" style="text-align:center">
       <div>
+          <p> Welcome to Water Webbpage</p>
+      </div>
+        <div>
         <input type="radio" id="kg" name="weight" value="kg">
         <label for="kg">kg</label>
       </div>
       
       <div>
-        <input type="radio" id="lbs" name="weight" value="lbs">
-        <label for="lbs">lbs</label>
+        <input type="radio" id="lbs" name="weight" value="lbs" >
+        <label for="lbs"> lbs</label>
       </div>
         <p>Please input your weight?</p>
         <p><input type="text" id="input_field" name="input" /></p>

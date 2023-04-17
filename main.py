@@ -8,9 +8,6 @@ messages = [{'title': 'Welcome!',
              'content': 'Please input the measurements you want to use'}]
 
 
-    
-
-
 @app.route("/", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
