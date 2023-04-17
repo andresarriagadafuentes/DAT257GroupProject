@@ -25,6 +25,16 @@ def user(usr):
 
 
 
+def getWeightmesurement():
+     return request.form['weight']
+
+def drinkingFormula1(weight):
+    if getWeightmesurement() == "kg":
+        water = round((weight * 0.5 * 0.0295735296 * 2.20462262185), 1)
+    else:
+        water = (weight * 0.5)
+    return water
+
 
 def drinkingFormula():
 
