@@ -19,6 +19,9 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route('/optimal')
+def optimal():
+    return render_template("information_about_water_intake.html")
 
 def getWeightmesurement():
      return request.form['weight']
