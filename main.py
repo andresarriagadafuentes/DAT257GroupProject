@@ -19,7 +19,7 @@ def login():
         water_intake = drinkingFormula1(float(request.form['input']))
         return render_template('waterintake.html', water_intake=water_intake)
     else:
-        return render_template("login.html")
+        return render_template("information_about_water_intake.html")
 
 @app.route('/optimal')
 def optimal():
