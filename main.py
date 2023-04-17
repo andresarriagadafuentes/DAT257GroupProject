@@ -7,19 +7,17 @@ app = Flask(__name__)
 messages = [{'title': 'Welcome!',
              'content': 'Please input the measurements you want to use'}]
 
-@app.route('/')
-def index():
-    return render_template('messages.html', messages=messages)
+
     
 
 
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
         water_intake = drinkingFormula1(float(request.form['input']))
         return render_template('waterintake.html', water_intake=water_intake)
     else:
-        return render_template("information_about_water_intake.html")
+        return render_template("base.html")
 
 @app.route('/optimal')
 def optimal():
