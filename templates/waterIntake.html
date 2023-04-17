@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Daily Water Intake</title>
+    <style>
+      /* Add some basic styling for the body */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+      
+      /* Add some styling for the result display */
+      #result {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 40px auto;
+        max-width: 500px;
+        text-align: center;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Add some styling for the "water-intake" text */
+      #water-intake {
+        font-size: 48px;
+        color: #4CAF50;
+        margin-top: 20px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="result">
+      <h1>Your Daily Water Intake</h1>
+      <span id="water-intake"></span> liters
+    </div>
+    <script>
+      const waterIntake = '{{ water_intake }}';
+      document.getElementById('water-intake').textContent = parseFloat(waterIntake).toFixed(1);
+    </script>
+  </body>
+</html>
