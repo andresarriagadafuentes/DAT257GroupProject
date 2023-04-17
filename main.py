@@ -10,11 +10,13 @@ messages = [{'title': 'Welcome!',
 @app.route('/')
 def index():
     return render_template('messages.html', messages=messages)
+    
+
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
-        water_intake = drinkingFormula1(request.form['nm'])
+        water_intake = drinkingFormula1(float(request.form['input']))
         return render_template('waterintake.html', water_intake=water_intake)
     else:
         return render_template("login.html")
