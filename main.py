@@ -4,9 +4,12 @@ from flask import Flask, redirect, url_for, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+messages = [{'title': 'Welcome!',
+             'content': 'Please input the measurements you want to use'}]
+
+@app.route('/')
+def index():
+    return render_template('messages.html', messages=messages)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
