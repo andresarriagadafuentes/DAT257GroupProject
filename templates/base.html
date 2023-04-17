@@ -35,9 +35,15 @@
     {% endfor %}
 {% endblock %}
     <form action="#" method="post">
-        <p>LBS or KG?</p>
-        <p><input type="text" name="nm" /></p>
-        <p><input type="submit" value="submit"/></p>
+      <div>
+        <input type="radio" id="kg" name="weight" value="kg">
+        <label for="kg">kg</label>
+      </div>
+      
+      <div>
+        <input type="radio" id="lbs" name="weight" value="lbs">
+        <label for="lbs">lbs</label>
+      </div>
         <p>Please input your weight?</p>
         <p><input type="text" name="nm" /></p>
         <p><input type="submit" value="submit"/></p>

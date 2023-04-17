@@ -26,11 +26,6 @@ def user(usr):
 
 
 
-
-
-
-
-
 def drinkingFormula():
 
     kg_or_lbs = input("Do you want to use kg or lbs? ")
