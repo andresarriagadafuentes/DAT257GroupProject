@@ -74,6 +74,7 @@
     </div>
     <script>
       const waterIntake = '{{ water_intake }}';
+      const waterConsumed = 0
       let remainingWaterIntake = parseFloat(waterIntake);
       document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
 
@@ -85,6 +86,7 @@
 
         if (isNaN(waterDrank) || waterDrank >= 0) {
           remainingWaterIntake -= waterDrank;
+          waterConsumed += waterDrank;
              if (remainingWaterIntake <= 0){
           alert('Daily dose of water achieved well done');}
           document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
