@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Daily Water Intake </title>
+    <title>Daily Water Intake</title>
     <style>
       /* Add some basic styling for the body */
       body {
-        color: darkcyan;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: cadetblue;
+        background-color: #f2f2f2;
       }
       
       /* Add some styling for the result display */
@@ -19,7 +18,7 @@
         margin: 40px auto;
         max-width: 500px;
         text-align: center;
-        background-color: antiquewhite;
+        background-color: #ffffff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -28,9 +27,31 @@
       /* Add some styling for the "water-intake" text */
       #water-intake {
         font-size: 48px;
-        color: darkcyan;
+        color: #4CAF50;
         margin-top: 20px;
         display: block;
+      }
+
+      /* Add some styling for the input field and button */
+      #input-box {
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #water-input {
+        margin-right: 10px;
+      }
+
+      #subtract-button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -38,10 +59,25 @@
     <div id="result">
       <h1>Your Daily Water Intake</h1>
       <span id="water-intake"></span> liters
+      <div id="input-box">
+        <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4">
+        <button id="subtract-button">Subtract from Total</button>
+      </div>
     </div>
     <script>
       const waterIntake = '{{ water_intake }}';
-      document.getElementById('water-intake').textContent = parseFloat(waterIntake).toFixed(1);
+      let remainingWaterIntake = parseFloat(waterIntake);
+      document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+
+      document.getElementById('subtract-button').addEventListener('click', () => {
+        const waterDrank = parseFloat(document.getElementById('water-input').value);
+        if (isNaN(waterDrank) || waterDrank <= 0) {
+          alert('Please enter a valid amount of water');
+        } else {
+          remainingWaterIntake -= waterDrank;
+          document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+        }
+      });
     </script>
   </body>
 </html>
