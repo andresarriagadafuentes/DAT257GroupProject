@@ -65,6 +65,8 @@
     <div id="result">
       <h1>Water left to drink</h1>
       <span id="water-intake"></span> liters
+      <h2>Water consumed:</h2>
+      <span id="water-consumed"></span> liters
       <div id="input-box">
         <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4">
         </div>
@@ -74,7 +76,7 @@
     </div>
     <script>
       const waterIntake = '{{ water_intake }}';
-      const waterConsumed = 0
+      let waterConsumed = 0
       let remainingWaterIntake = parseFloat(waterIntake);
       document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
 
@@ -90,6 +92,7 @@
              if (remainingWaterIntake <= 0){
           alert('Daily dose of water achieved well done');}
           document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+          document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);
         }
       });
     </script>
