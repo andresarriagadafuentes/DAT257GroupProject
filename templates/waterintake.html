@@ -26,7 +26,7 @@
 
       /* Add some styling for the "water-intake" text */
       #water-intake {
-        font-size: 48px;
+        font-size: 60px;
         color: #4CAF50;
         margin-top: 20px;
         display: block;
@@ -59,20 +59,39 @@
         border-radius: 5px;
         cursor: pointer;
       }
+       #text {
+        font-size: 36px;
+        color: black;
+        margin-top: 20px;
+        display: block;
+      }
+       #smalltext {
+        font-size: 10px;
+        color: black;
+        margin-top: 20px;
+        display: block;
+      }
     </style>
   </head>
   <body>
     <div id="result">
       <h1>Water left to drink</h1>
-      <span id="water-intake"></span> liters
+      <span id="water-intake" ></span> liters
       <h2>Water consumed:</h2>
-      <span id="water-consumed"></span> liters
+      <div id="text">
+      <span id="water-consumed"></span>
+      </div>
+      <div>liters</div>
+    </div>
+    <div id="result">
+      Substract the amount of water you have drunk so far:
       <div id="input-box">
         <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4">
         </div>
         <div>
         <button id="subtract-button">Subtract from Total</button>
       </div>
+    </div>
     </div>
     <script>
       const waterIntake = '{{ water_intake }}';
