@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comfortaa', cursive;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container{
+    height: 300px;
+    width: 300px;
+    padding: 25px;
+    position: fixed;
+}
+.progress-circle-outer{
+    height: 250px;
+    width: 250px;
+    position: fixed;
+    border-radius: 50%;
+    box-shadow: 6px 10px 10px -1px rgba(0,0,0,0.15),
+    -6px -6px 10px 11px rgba(255,255,255,0.7);
+    }
+.progress-circle-inner{
+  margin: 30px;
+  height: 190px;
+  width: 190px;
+  border-radius: 50%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+  inset -4px -4px 6px -1px rgba(255,255,255,0.7),
+  -0.5px -0.5px 0px rgba(255,255,255,1), 0.5px 0.5px 0px
+  rgba(0,0,0,0.15), 0px 12px 10px -10px rgba(0,0,0,0.05);
+ 
+}
+
+#percent{
+  margin: 20px;
+  color: black;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+circle{
+  fill: none;
+  stroke: url(#myGradient);
+  stroke-width: 30px;
+  stroke-dasharray: 450;
+  stroke-dashoffset: 450;
+  animation: anim 2s linear forwards;
+}
+
+@keyframes anim{
+  100%{
+	stroke-dashoffset: 0;
+  }
+}
+
+svg{
+  position: absolute;
+  top:0;
+  left:0;
+}
