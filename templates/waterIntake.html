@@ -33,9 +33,15 @@
       }
 
       /* Add some styling for the input field and button */
+      #input-box {
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       #water-input {
-        margin-top: 20px;
-        display: block;
+        margin-right: 10px;
       }
 
       #subtract-button {
@@ -46,7 +52,6 @@
         font-size: 16px;
         border-radius: 5px;
         cursor: pointer;
-        margin-top: 10px;
       }
     </style>
   </head>
@@ -54,8 +59,10 @@
     <div id="result">
       <h1>Your Daily Water Intake</h1>
       <span id="water-intake"></span> liters
-      <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.25">
-      <button id="subtract-button">Subtract from Total</button>
+      <div id="input-box">
+        <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4">
+        <button id="subtract-button">Subtract from Total</button>
+      </div>
     </div>
     <script>
       const waterIntake = '{{ water_intake }}';
