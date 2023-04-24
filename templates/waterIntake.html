@@ -31,16 +31,46 @@
         margin-top: 20px;
         display: block;
       }
+
+      /* Add some styling for the input field and button */
+      #water-input {
+        margin-top: 20px;
+        display: block;
+      }
+
+      #subtract-button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body>
     <div id="result">
       <h1>Your Daily Water Intake</h1>
       <span id="water-intake"></span> liters
+      <input type="number" id="water-input" placeholder="Enter amount of water drank in liters">
+      <button id="subtract-button">Subtract from Total</button>
     </div>
     <script>
       const waterIntake = '{{ water_intake }}';
-      document.getElementById('water-intake').textContent = parseFloat(waterIntake).toFixed(1);
+      let remainingWaterIntake = parseFloat(waterIntake);
+      document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+
+      document.getElementById('subtract-button').addEventListener('click', () => {
+        const waterDrank = parseFloat(document.getElementById('water-input').value);
+        if (isNaN(waterDrank) || waterDrank <= 0) {
+          alert('Please enter a valid amount of water');
+        } else {
+          remainingWaterIntake -= waterDrank;
+          document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+        }
+      });
     </script>
   </body>
 </html>
