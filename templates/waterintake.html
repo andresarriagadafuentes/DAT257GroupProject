@@ -1,124 +1,295 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Water Consumption</title>
-    <style>
-      /* Add some basic styling for the body */
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: cornflowerblue;
-      }
+<head>
+  <title>Water Consumption</title>
+  <style>
+    /* Add some basic styling for the body */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: cornflowerblue;
+    }
 
-      /* Add some styling for the result display */
-      #result {
-        font-size: 24px;
-        font-weight: bold;
-        margin: 40px auto;
-        max-width: 500px;
-        text-align: center;
-        background-color: gainsboro;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
+    /* Add some styling for the container */
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Align items to the right */
+      margin: 0 auto; /* Add margin to center the container */
+      max-width: 1000px; /* Add max-width to limit container width */
+    }
 
-      /* Add some styling for the "water-intake" text */
-      #water-intake {
-        font-size: 60px;
-        color: #4CAF50;
-        margin-top: 20px;
-        display: block;
-      }
+    /* Add some styling for the result display */
+    .result {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 40px 0;
+      max-width: 500px;
+      text-align: center;
+      float: right;
+      background-color: gainsboro;
+      padding: 50px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-      /* Add some styling for the input field and button */
-      #input-box {
-        margin: 20px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    /* Add some styling for the "water-intake" text */
+    #water-intake {
+      font-size: 60px;
+      color: #4CAF50;
+      margin-top: 20px;
+      display: block;
+    }
 
-      #water-input {
-        text-align: center;
-        font-size: large;
-        height: 40px;
-        width: 130px;
+    /* Add some styling for the input field and button */
+    #input-box {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
+    #water-input {
+      text-align: center;
+      font-size: large;
+      height: 40px;
+      width: 130px;
+    }
 
-      }
+    #subtract-button {
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      width: 150px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-      #subtract-button {
-        background-color: #4CAF50;
-        color: #ffffff;
-        border: none;
-        width: 150px;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-       #text {
-        font-size: 36px;
-        color: black;
-        margin-top: 20px;
-        display: block;
-      }
-       #smalltext {
-        font-size: 10px;
-        color: black;
-        margin-top: 20px;
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="result">
+    #text {
+      font-size: 36px;
+      color: black;
+      margin-top: 20px;
+      display: block;
+    }
+
+    #smalltext {
+      font-size: 10px;
+      color: black;
+      margin-top: 20px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="result">
       <h1>Water left to drink</h1>
-      <span id="water-intake" ></span> liters
+      <span id="water-intake"></span> liters
       <h2>Water consumed:</h2>
       <div id="text">
-      <span id="water-consumed"></span>
+        <span id="water-consumed"></span>
       </div>
       <div>liters</div>
     </div>
-    <div id="result">
-      Substract the amount of water you have drunk so far:
+    <div class="result">
+      Subtract the amount of water you have drunk so far:
       <div id="input-box">
         <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4">
-        </div>
-        <div>
+      </div>
+      <div>
         <button id="subtract-button">Subtract from Total</button>
       </div>
     </div>
-    </div>
-    <script>
-      const waterIntake = '{{ water_intake }}';
-      let waterConsumed = 0
-      let remainingWaterIntake = parseFloat(waterIntake);
-      document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+  </div>
 
-      document.getElementById('subtract-button').addEventListener('click', () => {
-        const waterDrank = parseFloat(document.getElementById('water-input').value);
-        if (isNaN(waterDrank) || waterDrank <= 0) {
-          alert('Please enter a valid amount of water');
-        }
+  <style>
+    .container{
+    height: 300px;
+    width: 300px;
+    padding: 25px;
+    margin-top: 10px;
+    position: relative;
+    top: -800px;
+    left: 200px;
 
-        if (isNaN(waterDrank) || waterDrank >= 0) {
-          waterConsumed += waterDrank;
-             if (remainingWaterIntake <= waterDrank){
-              remainingWaterIntake -= waterDrank;
-              document.getElementById('water-intake').textContent = 0;    
-              alert('Daily dose of water achieved well done');
-            }
-          else{
-            remainingWaterIntake -= waterDrank;
-            document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
-          }
-          document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);
+}
+.progress-circle-outer{
+    height: 250px;
+    width: 250px;
+    
+    position: relative;
+    border-radius: 50%;
+    
+    }
+.progress-circle-inner{
+  margin: 30px;
+  height: 190px;
+  width: 190px;
+  border-radius: 50%;
+  background-color: #5078f2;
+  background-image: linear-gradient(315deg, #5078f2 0%, #efe9f4 74%);
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+#percent{
+  margin: 20px;
+  color: black;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+circle{
+  fill: none;
+  stroke: url(#myGradient);
+  stroke-width: 30px;
+  stroke-dasharray: 691;
+  stroke-dashoffset: 691;
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+@keyframes anim25 {
+  0%{
+    stroke-dashoffset: 691;
+  }
+
+  25%{
+    stroke-dashoffset: 520;
+  }
+  
+}
+
+@keyframes anim50 {
+  25%{
+    stroke-dashoffset: 520;
+  }
+  50%{
+    stroke-dashoffset: 344.5;
+  }
+}
+
+@keyframes anim75 {
+  50%{
+    stroke-dashoffset: 344.5;
+  }
+  75%{
+    stroke-dashoffset: 172.25;
+  }
+}
+
+@keyframes anim100 {
+  75%{
+    stroke-dashoffset: 172.25;
+  }
+  100%{
+    stroke-dashoffset: 0;
+  }
+}
+
+svg{
+  position: absolute;
+  top:0;
+  left:0;
+}
+
+  </style>
+  <div class="container">
+    <div class="progress-circle-outer">
+      <div class="progress-circle-inner">
+        <div id="percent">
+        </div>
+         </div>
+       </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width= "300px" height="800px" version="1.1">
+         <defs>
+           <linearGradient id="myGradient">
+        <stop offset="0%" stop-color="#2a2a72" />
+        <stop offset="100%" stop-color="#009ffd" />
+           </linearGradient>
+         </defs>
+      <circle cx="150" cy="150" r="110"
+      stroke-linecap="round" stroke="url(#myGradient)" stroke-width="5"/>
+    </svg>
+  </div>
+ <script>
+  const waterGoal = '{{ water_intake }}';
+  const waterIntake = '{{ water_intake }}';
+  let waterConsumed = 0
+  let remainingWaterIntake = parseFloat(waterIntake);
+  document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+
+  document.getElementById('subtract-button').addEventListener('click', () => {
+    const waterDrank = parseFloat(document.getElementById('water-input').value);
+    if (isNaN(waterDrank) || waterDrank <= 0) {
+      alert('Please enter a valid amount of water');
+    }
+
+    if (isNaN(waterDrank) || waterDrank >= 0) {
+      waterConsumed += waterDrank;
+         if (remainingWaterIntake <= waterDrank){
+          remainingWaterIntake -= waterDrank;
+          document.getElementById('water-intake').textContent = 0;    
+          alert('Daily dose of water achieved well done');
         }
-      });
-    </script>
-  </body>
+      else{
+        remainingWaterIntake -= waterDrank;
+        document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+      }
+      document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);
+    }
+  });
+
+  document.getElementById('subtract-button').addEventListener('click', () => {
+      const waterDrank = parseFloat(document.getElementById('water-input').value);
+      if (isNaN(waterDrank) || waterDrank >= 0){
+      updatePercent();}
+    });
+
+    document.getElementById('percent').textContent = 0 + '%';
+  let percent = 0;
+
+function updateCircle(percent) {
+  const circle = document.querySelector('circle');
+  let circumference = 110 * 2 * Math.PI;
+  let offset = circumference;
+  if (percent <= 100 && percent != 0) {
+    if (percent >= 100) {
+      offset = 0;
+      circle.classList.add('anim100');
+    }
+    if (25 <= percent && percent < 50) {
+      offset = circumference - 0.25 * circumference;
+      circle.style.strokeDashoffset = offset;
+      circle.classList.add('anim25');
+    }
+    if (50 <= percent && percent < 75) {
+      offset = circumference - 0.50 * circumference;
+      circle.style.strokeDashoffset = offset;
+      circle.classList.add('anim50');
+    }
+    if (75 <= percent && percent < 100) {
+      offset = circumference - 0.75 * circumference;
+      circle.style.strokeDashoffset = offset;
+      circle.classList.add('anim75');
+    }
+  }
+}
+
+function updatePercent() {
+  percent = (consumedWater / waterGoal) * 100;
+  if (percent >= 100) {
+    percent = 100;
+  }
+  document.getElementById('percent').textContent = percent + '%';
+  updateCircle(percent);
+}
+
+
+  
+</script>
+</body>
 </html>
