@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Daily Water Intake </title>
+    <title>Daily Water Intake</title>
     <style>
       /* Add some basic styling for the body */
       body {
-        color: darkcyan;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: cadetblue;
+        background-color: #f2f2f2;
       }
       
       /* Add some styling for the result display */
@@ -19,7 +18,7 @@
         margin: 40px auto;
         max-width: 500px;
         text-align: center;
-        background-color: antiquewhite;
+        background-color: #ffffff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -28,7 +27,7 @@
       /* Add some styling for the "water-intake" text */
       #water-intake {
         font-size: 48px;
-        color: darkcyan;
+        color: #4CAF50;
         margin-top: 20px;
         display: block;
       }
@@ -55,7 +54,7 @@
     <div id="result">
       <h1>Your Daily Water Intake</h1>
       <span id="water-intake"></span> liters
-      <input type="number" id="water-input" placeholder="Enter amount of water drank in liters">
+      <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4">
       <button id="subtract-button">Subtract from Total</button>
     </div>
     <script>
