@@ -8,7 +8,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: cornflowerblue;
+      background-color: #0d0a0b;
+background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     }
 
     /* Add some styling for the container */
@@ -149,7 +150,6 @@ circle{
   stroke-width: 30px;
   stroke-dasharray: 691;
   stroke-dashoffset: 691;
-  transition: stroke-dashoffset 0.5s ease-in-out;
 }
 
 @keyframes anim25 {
@@ -240,41 +240,35 @@ svg{
         document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
       }
       document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);
+      updatePercent();
     }
   });
 
-  document.getElementById('subtract-button').addEventListener('click', () => {
-      const waterDrank = parseFloat(document.getElementById('water-input').value);
-      if (isNaN(waterDrank) || waterDrank >= 0){
-      updatePercent();}
-    });
-
-    document.getElementById('percent').textContent = 0 + '%';
+  document.getElementById('percent').textContent = 0 + '%';
   let percent = 0;
 
 function updateCircle(percent) {
-  const circle = document.querySelector('circle');
+  const circle = document.getElementById('circle');
   let circumference = 110 * 2 * Math.PI;
   let offset = circumference;
   if (percent <= 100 && percent != 0) {
-    if (percent >= 100) {
-      offset = 0;
-      circle.classList.add('anim100');
-    }
     if (25 <= percent && percent < 50) {
       offset = circumference - 0.25 * circumference;
       circle.style.strokeDashoffset = offset;
-      circle.classList.add('anim25');
+      document.getElementById('circle').style.animation = 'anim25 2s linear forwards';
     }
     if (50 <= percent && percent < 75) {
       offset = circumference - 0.50 * circumference;
       circle.style.strokeDashoffset = offset;
-      circle.classList.add('anim50');
+      document.getElementById('circle').style.animation = 'anim50 2s linear forwards';
     }
     if (75 <= percent && percent < 100) {
       offset = circumference - 0.75 * circumference;
       circle.style.strokeDashoffset = offset;
-      circle.classList.add('anim75');
+      document.getElementById('circle').style.animation = 'anim75 2s linear forwards';
+    }
+    else{
+      document.getElementById('circle').style.animation = 'anim100 2s linear forwards';
     }
   }
 }
