@@ -151,6 +151,18 @@ circle{
   stroke-dasharray: 691;
   stroke-dashoffset: 691;
 }
+.first{
+  animation: anim25 2s linear forwards;
+}
+.second{
+  animation: anim50 2s linear forwards;
+}
+.third{
+  animation: anim75 2s linear forwards;
+}
+.final{
+  animation: anim100 2s linear forwards;
+}
 
 @keyframes anim25 {
   0%{
@@ -204,7 +216,7 @@ svg{
         </div>
          </div>
        </div>
-    <svg xmlns="http://www.w3.org/2000/svg" width= "300px" height="800px" version="1.1">
+    <svg id = "circle" xmlns="http://www.w3.org/2000/svg" width= "300px" height="800px" version="1.1">
          <defs>
            <linearGradient id="myGradient">
         <stop offset="0%" stop-color="#2a2a72" />
@@ -216,10 +228,11 @@ svg{
     </svg>
   </div>
  <script>
-  const waterGoal = '{{ water_intake }}';
+
   const waterIntake = '{{ water_intake }}';
   let waterConsumed = 0
   let remainingWaterIntake = parseFloat(waterIntake);
+  const waterGoal = parseFloat(waterIntake);
   document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
 
   document.getElementById('subtract-button').addEventListener('click', () => {
@@ -230,6 +243,7 @@ svg{
 
     if (isNaN(waterDrank) || waterDrank >= 0) {
       waterConsumed += waterDrank;
+      updatePercent()
          if (remainingWaterIntake <= waterDrank){
           remainingWaterIntake -= waterDrank;
           document.getElementById('water-intake').textContent = 0;    
@@ -240,46 +254,48 @@ svg{
         document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
       }
       document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);
-      updatePercent();
     }
   });
 
   document.getElementById('percent').textContent = 0 + '%';
-  let percent = 0;
+  
 
 function updateCircle(percent) {
-  const circle = document.getElementById('circle');
+  const circle = document.querySelector('circle');
   let circumference = 110 * 2 * Math.PI;
   let offset = circumference;
   if (percent <= 100 && percent != 0) {
     if (25 <= percent && percent < 50) {
-      offset = circumference - 0.25 * circumference;
+      offset = 520;
       circle.style.strokeDashoffset = offset;
-      document.getElementById('circle').style.animation = 'anim25 2s linear forwards';
+      circle.classList.toggle(".first");
     }
     if (50 <= percent && percent < 75) {
-      offset = circumference - 0.50 * circumference;
+      offset = 344.5;
       circle.style.strokeDashoffset = offset;
-      document.getElementById('circle').style.animation = 'anim50 2s linear forwards';
+      circle.classList.toggle(".second");
     }
     if (75 <= percent && percent < 100) {
-      offset = circumference - 0.75 * circumference;
+      offset = 172.25;
       circle.style.strokeDashoffset = offset;
-      document.getElementById('circle').style.animation = 'anim75 2s linear forwards';
+      circle.classList.toggle(".third");
     }
-    else{
-      document.getElementById('circle').style.animation = 'anim100 2s linear forwards';
+    if (percent>= 100){
+      circle.style.strokeDashoffset = 0;
+      circle.classList.toggle(".final");
     }
   }
 }
+let savedPercent = 0
 
 function updatePercent() {
-  percent = (consumedWater / waterGoal) * 100;
-  if (percent >= 100) {
-    percent = 100;
+  savedPercent = (waterConsumed / waterGoal) * 100;
+  if (savedPercent >= 100) {
+    savedPercent = 100;
   }
-  document.getElementById('percent').textContent = percent + '%';
-  updateCircle(percent);
+  savedPercent = Math.trunc(savedPercent)
+  document.getElementById('percent').textContent = savedPercent + '%';
+  updateCircle(savedPercent);
 }
 
 
