@@ -118,6 +118,20 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     max-height: 50px;
   }
 
+
+    .escape {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px;
+
+      float: right;
+      background-color: gainsboro;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+    }
+
   </style>
 </head>
 <body>
@@ -132,6 +146,13 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     </nav>
   </header>
 
+<div>
+  <form id="escape" action="#" method="post">
+  <h1 class="escape">
+    <button id="return-button">Return</button>
+  </h1>
+  </form>
+</div>
   <div id="container">
     <div class="result">
       <h1>Water left to drink</h1>
@@ -312,24 +333,28 @@ function updateCircle(percent) {
   let circumference = 110 * 2 * Math.PI;
   let offset = circumference;
   if (percent <= 100 && percent != 0) {
-    if (25 <= percent && percent < 50) {
+    if (25 <= percent && percent < 50 && lastPercent < 25) {
+      circle.classList.toggle("first");
       offset = 520;
       circle.style.strokeDashoffset = offset;
-      circle.classList.toggle(".first");
+      lastPercent = percent;
     }
-    if (50 <= percent && percent < 75) {
+    if (50 <= percent && percent < 75 && lastPercent < 50) {
       offset = 344.5;
       circle.style.strokeDashoffset = offset;
-      circle.classList.toggle(".second");
+      circle.classList.toggle("second");
+      lastPercent = percent;
     }
-    if (75 <= percent && percent < 100) {
+    if (75 <= percent && percent < 100 && lastPercent < 75) {
       offset = 172.25;
       circle.style.strokeDashoffset = offset;
-      circle.classList.toggle(".third");
+      circle.classList.toggle("third");
+      lastPercent = percent;
     }
-    if (percent>= 100){
+    if (percent>= 100 && lastPercent < 100){
       circle.style.strokeDashoffset = 0;
-      circle.classList.toggle(".final");
+      circle.classList.toggle("final");
+      lastPercent = percent;
     }
   }
 }
