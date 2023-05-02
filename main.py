@@ -1,6 +1,8 @@
 import math
 import string
 from datetime import timedelta
+import sqlite3
+from sqlite3 import Error
 
 from flask import Flask, redirect, url_for, render_template, request,session
 #from flask_session import Session
@@ -78,6 +80,8 @@ def personal():
 
     return render_template("user.html", weight = weight)
 '''
+
+
 def getWeightmesurement():
     session["weight"] = request.form['weight']
     return request.form['weight']
@@ -101,11 +105,41 @@ def drinkingFormula1(weight):
         return water
 
 
+def database():       
+    conn = None
+    try:
+        conn = sqlite3.connect("db.db")
+        print(sqlite3.version)
+    except Error as e:
+        print(e)
+    return conn
+
+def createTable(c):
+    sql_create_user_table = """ CREATE TABLE IF NOT EXISTS Users (
+                                        login text PRIMARY KEY,
+                                        weight SMALLINT NOT NULL,
+                                    ); """
+        
+    sql_create_history_table = """ CREATE TABLE IF NOT EXISTS History (
+                                        login text,
+                                        date DATE,
+                                        water FLOAT(2),
+                                        Foreign Key (login) references Users (login),
+                                        Primary Key (login, date)
+                                    ); """
+    if c is not None:
+        # create projects table
+        c.execute(sql_create_user_table)
+        c.execute(sql_create_history_table)
+    else:
+        print("Error! cannot create the database connection.")
 
 
 
 if __name__ == '__main__':
     #drinkingFormula()
     #db.create_all()
+    c = database()
+
     app.run(debug=True)
 
