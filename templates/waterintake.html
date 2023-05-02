@@ -83,6 +83,42 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
       display: block;
     }
 
+   header {
+    background-color: blue;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 30px;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+  nav img {
+    max-height: 50px;
+  }
+
+
     .escape {
       font-size: 20px;
       font-weight: bold;
@@ -99,6 +135,17 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
   </style>
 </head>
 <body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Home!!!!</a></li>
+        <li><a href="#">Clean Water</a></li>
+        <li><a href="#">Athletes</a></li>
+      </ul>
+    </nav>
+  </header>
+
 <div>
   <form id="escape" action="#" method="post">
   <h1 class="escape">
@@ -119,7 +166,7 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     <div class="result">
       Subtract the amount of water you have drunk so far:
       <div id="input-box">
-        <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.0" name="water_detractor">
+        <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4" name="water_detractor">
       </div>
       <div>
         <button id="subtract-button">Subtract from Total</button>
@@ -175,12 +222,15 @@ circle{
 .first{
   animation: anim25 1s linear forwards;
 }
+
 .second{
   animation: anim50 1s linear forwards;
 }
+
 .third{
   animation: anim75 1s linear forwards;
 }
+
 .final{
   animation: anim100 1s linear forwards;
 }
@@ -255,8 +305,6 @@ svg{
   let remainingWaterIntake = parseFloat(waterIntake);
   const waterGoal = parseFloat(waterIntake);
   document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
-
-
 
   document.getElementById('subtract-button').addEventListener('click', () => {
     const waterDrank = parseFloat(document.getElementById('water-input').value);
