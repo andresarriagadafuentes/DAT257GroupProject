@@ -83,6 +83,42 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
       display: block;
     }
 
+   header {
+    background-color: blue;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 30px;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+  nav img {
+    max-height: 50px;
+  }
+
+
     .escape {
       font-size: 20px;
       font-weight: bold;
@@ -99,13 +135,26 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
   </style>
 </head>
 <body>
-<div>
-  <form id="escape" action="#" method="post">
-  <h1 class="escape">
-    <button id="return-button">Return</button>
-  </h1>
-  </form>
-</div>
+
+  <header>
+    <nav>
+      <ul>
+        <div>
+          <form id="escape" action="#" method="post">
+            <h1 class="escape">
+              <button id="return-button">Return</button>
+          </h1>
+          </form>
+        </div>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Clean Water</a></li>
+        <li><a href="#">Athletes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+
   <div id="container">
     <div class="result">
       <h1>Water left to drink</h1>
@@ -119,7 +168,7 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     <div class="result">
       Subtract the amount of water you have drunk so far:
       <div id="input-box">
-        <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.0" name="water_detractor">
+        <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4" name="water_detractor">
       </div>
       <div>
         <button id="subtract-button">Subtract from Total</button>
@@ -173,52 +222,55 @@ circle{
   stroke-dashoffset: 691;
 }
 .first{
-  animation: anim25 2s linear forwards;
+  animation: anim25 1s linear forwards;
 }
+
 .second{
-  animation: anim50 2s linear forwards;
+  animation: anim50 1s linear forwards;
 }
+
 .third{
-  animation: anim75 2s linear forwards;
+  animation: anim75 1s linear forwards;
 }
+
 .final{
-  animation: anim100 2s linear forwards;
+  animation: anim100 1s linear forwards;
 }
 
 @keyframes anim25 {
-  0%{
+  from{
     stroke-dashoffset: 691;
   }
 
-  25%{
+  to{
     stroke-dashoffset: 520;
   }
   
 }
 
 @keyframes anim50 {
-  25%{
+  from{
     stroke-dashoffset: 520;
   }
-  50%{
+  to{
     stroke-dashoffset: 344.5;
   }
 }
 
 @keyframes anim75 {
-  50%{
+  from{
     stroke-dashoffset: 344.5;
   }
-  75%{
+  to{
     stroke-dashoffset: 172.25;
   }
 }
 
 @keyframes anim100 {
-  75%{
+  from{
     stroke-dashoffset: 172.25;
   }
-  100%{
+  to{
     stroke-dashoffset: 0;
   }
 }
@@ -256,8 +308,6 @@ svg{
   const waterGoal = parseFloat(waterIntake);
   document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
 
-
-
   document.getElementById('subtract-button').addEventListener('click', () => {
     const waterDrank = parseFloat(document.getElementById('water-input').value);
     if (isNaN(waterDrank) || waterDrank <= 0) {
@@ -288,24 +338,28 @@ function updateCircle(percent) {
   let circumference = 110 * 2 * Math.PI;
   let offset = circumference;
   if (percent <= 100 && percent != 0) {
-    if (25 <= percent && percent < 50) {
+    if (25 <= percent && percent < 50 && lastPercent < 25) {
+      circle.classList.toggle("first");
       offset = 520;
       circle.style.strokeDashoffset = offset;
-      circle.classList.toggle(".first");
+      lastPercent = percent;
     }
-    if (50 <= percent && percent < 75) {
+    if (50 <= percent && percent < 75 && lastPercent < 50) {
       offset = 344.5;
       circle.style.strokeDashoffset = offset;
-      circle.classList.toggle(".second");
+      circle.classList.toggle("second");
+      lastPercent = percent;
     }
-    if (75 <= percent && percent < 100) {
+    if (75 <= percent && percent < 100 && lastPercent < 75) {
       offset = 172.25;
       circle.style.strokeDashoffset = offset;
-      circle.classList.toggle(".third");
+      circle.classList.toggle("third");
+      lastPercent = percent;
     }
-    if (percent>= 100){
+    if (percent>= 100 && lastPercent < 100){
       circle.style.strokeDashoffset = 0;
-      circle.classList.toggle(".final");
+      circle.classList.toggle("final");
+      lastPercent = percent;
     }
   }
 }
