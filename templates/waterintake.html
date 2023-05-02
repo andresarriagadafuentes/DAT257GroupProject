@@ -84,8 +84,7 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     }
 
    header {
-    background-color: #0d0a0b;
-    background-image: linear-gradient(315deg, #0d0a0b  0%, #009fc2 44%);
+    background-color: blue;
     height: 80px;
     display: flex;
     justify-content: space-between;
@@ -133,6 +132,17 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
       position: fixed;
     }
 
+    .undo {
+      font-size: 15px;
+      font-weight: bold;
+      margin: 10px;
+
+      float: right;
+      background-color: cornflowerblue;
+
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
   </style>
 </head>
 <body>
@@ -170,6 +180,7 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
       Subtract the amount of water you have drunk so far:
       <div id="input-box">
         <input type="number" id="water-input" placeholder="Enter amount of water drank in liters" value="0.4" name="water_detractor">
+        <button class = "undo" id="Undo-button"> Undo </button>
       </div>
       <div>
         <button id="subtract-button">Subtract from Total</button>
@@ -302,12 +313,36 @@ svg{
     </svg>
   </div>
  <script>
-
+  const totalWaterIntake = '{{ water_intake }}';
   const waterIntake = '{{ water_intake }}';
   let waterConsumed = 0
   let remainingWaterIntake = parseFloat(waterIntake);
   const waterGoal = parseFloat(waterIntake);
   document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+
+  document.getElementById('Undo-button').addEventListener('click', () => {
+    const waterDrank = parseFloat(document.getElementById('water-input').value);
+    if (isNaN(waterDrank) || waterDrank <= 0) {
+      alert('Please enter a valid amount of water');
+    }
+
+    if (isNaN(waterDrank) || waterDrank >= 0) {
+      if (waterConsumed <= 0){alert("WaterConsumed is 0")}
+      else{
+        waterConsumed -= waterDrank;
+        if (waterConsumed < 0) {
+          waterConsumed = 0;
+          remainingWaterIntake = parseFloat(totalWaterIntake);
+          remainingWaterIntake += waterDrank;
+          document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+        }
+        else{
+        updatePercent()
+        remainingWaterIntake += waterDrank;
+        document.getElementById('water-intake').textContent = remainingWaterIntake.toFixed(1);
+      }
+      document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);
+  }}});
 
   document.getElementById('subtract-button').addEventListener('click', () => {
     const waterDrank = parseFloat(document.getElementById('water-input').value);
@@ -332,10 +367,7 @@ svg{
   });
 
   document.getElementById('percent').textContent = 0 + '%';
-  
-  
   let lastPercent = 0;
-
 
 function updateCircle(percent) {
   const circle = document.querySelector('circle');
