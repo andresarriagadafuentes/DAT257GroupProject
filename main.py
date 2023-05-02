@@ -48,12 +48,15 @@ def login():
 def yourwaterintake():
     if 'water_intake' in session:
         if request.method == "POST":
+            return redirect("/")
+        if request.method == "POST":
             if request.form['water_detractor']:
                 session['water_intake'] = session['water_intake']-0.4
 
 
     water_intake = session['water_intake']
     return render_template('waterintake.html', water_intake=water_intake)
+
 
 @app.route('/optimal')
 def optimal():
