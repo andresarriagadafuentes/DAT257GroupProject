@@ -27,6 +27,7 @@ messages = [{'title': 'Welcome!',
 @app.route("/", methods=["POST", "GET"])
 def login():
     if 'weight' in session:
+        
         session['water_intake'] = drinkingFormula1(float(getWeightmesurement()))
         return(url_for("yourwaterintake"))
     if request.method == "POST":
@@ -73,7 +74,7 @@ def personal():
 
 
 def getWeightmesurement():
-    session['weight'] = request.form['weight']
+    #session['weight'] = request.form['weight']
     return request.form['weight']
 
 def drinkingFormula1(weight):
