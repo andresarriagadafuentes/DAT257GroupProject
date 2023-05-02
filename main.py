@@ -3,17 +3,16 @@ import string
 from datetime import timedelta
 
 from flask import Flask, redirect, url_for, render_template, request,session
-from flask_session import Session
-
+#from flask_session import Session
 #from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+#app.config["SESSION_PERMANENT"] = False
+#app.config["SESSION_TYPE"] = "filesystem"
+#Session(app)
 
-#app.secret_key = "AyyLMAO"
-#app.permanent_session_lifetime = timedelta(minutes=5)
+app.secret_key = "AyyLMAO"
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 '''
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
@@ -47,6 +46,12 @@ def login():
 
 @app.route("/waterintake", methods=["POST","GET"])
 def yourwaterintake():
+    if 'water_intake' in session:
+        if request.method == "POST":
+            if request.form['water_detractor']:
+                session['water_intake'] = session['water_intake']-0.4
+
+
     water_intake = session['water_intake']
     return render_template('waterintake.html', water_intake=water_intake)
 
