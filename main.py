@@ -1,7 +1,6 @@
 import math
 import string
 from datetime import timedelta
-#import modelDB
 
 
 from flask import Flask, redirect, url_for, render_template, request,session
@@ -27,6 +26,9 @@ messages = [{'title': 'Welcome!',
 
 @app.route("/", methods=["POST", "GET"])
 def login():
+    if 'weight' in session:
+        session['water_intake'] = drinkingFormula1(float(getWeightmesurement()))
+        return(url_for("yourwaterintake"))
     if request.method == "POST":
         session['water'] = float(request.form['input'])
         session['water_intake'] = drinkingFormula1(float(request.form['input']))
@@ -66,12 +68,12 @@ def personal():
             db.session.add(usr)
             db.session.commit()
 
-    return render_template("user.html", weight = weight)
+    return render_template("user.html", weight = name)
 
 
 
 def getWeightmesurement():
-    session["weight"] = request.form['weight']
+    session['weight'] = request.form['weight']
     return request.form['weight']
 
 def drinkingFormula1(weight):
