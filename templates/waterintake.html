@@ -173,52 +173,52 @@ circle{
   stroke-dashoffset: 691;
 }
 .first{
-  animation: anim25 linear forwards 2s;
+  animation: anim25 1s linear forwards;
 }
 .second{
-  animation: anim50 linear forwards 2s;
+  animation: anim50 1s linear forwards;
 }
 .third{
-  animation: anim75 2s linear forwards;
+  animation: anim75 1s linear forwards;
 }
 .final{
-  animation: anim100 2s linear forwards;
+  animation: anim100 1s linear forwards;
 }
 
 @keyframes anim25 {
-  0%{
+  from{
     stroke-dashoffset: 691;
   }
 
-  25%{
+  to{
     stroke-dashoffset: 520;
   }
   
 }
 
 @keyframes anim50 {
-  25%{
+  from{
     stroke-dashoffset: 520;
   }
-  50%{
+  to{
     stroke-dashoffset: 344.5;
   }
 }
 
 @keyframes anim75 {
-  50%{
+  from{
     stroke-dashoffset: 344.5;
   }
-  75%{
+  to{
     stroke-dashoffset: 172.25;
   }
 }
 
 @keyframes anim100 {
-  75%{
+  from{
     stroke-dashoffset: 172.25;
   }
-  100%{
+  to{
     stroke-dashoffset: 0;
   }
 }
