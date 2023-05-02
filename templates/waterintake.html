@@ -84,7 +84,8 @@ background-image: linear-gradient(315deg, #0d0a0b 0%, #009fc2 74%);
     }
 
    header {
-    background-color: blue;
+    background-color: #0d0a0b;
+    background-image: linear-gradient(315deg, #0d0a0b  0%, #009fc2 44%);
     height: 80px;
     display: flex;
     justify-content: space-between;
@@ -330,7 +331,8 @@ svg{
 
   document.getElementById('percent').textContent = 0 + '%';
   
-let lastPercent = 0;
+  
+  let lastPercent = 0;
 
 function updateCircle(percent) {
   const circle = document.querySelector('circle');
