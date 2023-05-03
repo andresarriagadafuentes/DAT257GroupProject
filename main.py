@@ -3,8 +3,9 @@ import string
 from datetime import timedelta
 
 
-from flask import Flask, redirect, url_for, render_template, request,session
+from flask import Flask, redirect, url_for, render_template, request,session,flash
 from flask_sqlalchemy import SQLAlchemy
+from forms import RegistrationForm,LoginForm
 
 app = Flask(__name__)
 db = SQLAlchemy()
@@ -80,6 +81,7 @@ def getWeightmesurement():
 def drinkingFormula1(weight):
     water1 = session['water']
     if "weight" in session:
+
         weight = session["weight"]
         water1 = session['water']
         if weight == "kg":
@@ -94,6 +96,20 @@ def drinkingFormula1(weight):
         else:
             water = (water1 * 0.5 * 0.029576)
         return water
+
+@app.route("/register",methods=["POST","GET"])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect((url_for('/')))
+
+    return render_template('register.html', title='Register', form =form)
+
+@app.route("/login")
+def login1():
+    form = LoginForm()
+    return render_template('login.html', title='Login', form =form)
 
 
 class User(db.Model):
