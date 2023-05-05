@@ -1,3 +1,4 @@
+import datetime
 import math
 import string
 from datetime import timedelta
@@ -9,7 +10,7 @@ from forms import RegistrationForm,LoginForm
 
 app = Flask(__name__)
 db = SQLAlchemy()
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
 db.init_app(app)
 #app.config["SESSION_PERMANENT"] = False
 #app.config["SESSION_TYPE"] = "filesystem"
@@ -113,14 +114,32 @@ def login1():
 
 
 class User(db.Model):
-    id = db.Column(db.Text, primary_key=True)
-    weight = db.Column(db.INT, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True,nullable=False)
+    lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
+    weight = db.Column(db.Integer, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship('Post',backref='author', lazy=True)
 
+    def __repr__(self):
+        return f"User('{self.username}')"
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100),nullable=False)
+    content = db.Column(db.Text,nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"
 class History(db.Model):
     id = db.Column(db.Text, primary_key=True)
     date = db.Column(db.Date, primary_key=True)
     waterIntake = db.Column(db.Float)
     waterGoal = db.Column(db.Float)
+
+
 
 
 
