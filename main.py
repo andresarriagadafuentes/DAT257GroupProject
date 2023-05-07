@@ -67,7 +67,9 @@ def personal():
 
     return render_template("user.html", weight = name)
 
-
+@app.route('/information')
+def information():
+    return render_template("information_page.html")
 
 def getWeightmesurement():
     #session['weight'] = request.form['weight']

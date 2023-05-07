@@ -71,6 +71,42 @@
           color:black;
 
       }
+
+      header {
+    background-color: blue;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 30px;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+  nav img {
+    max-height: 50px;
+  }
+
       </style>
 
 
@@ -88,6 +124,17 @@
     {% endfor %}
 
 {% endblock %}
+    <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Personal</a></li>
+        <li><a href="/information">Information</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
   <div id="headline">
           <p> Calculator </p>
       </div>
