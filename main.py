@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from flask import Flask, redirect, url_for, render_template, request,session,flash
 from flask_sqlalchemy import SQLAlchemy
-from forms import RegistrationForm,LoginForm
+from forms import RegistrationForm, LoginForm, CalculatorForm
 
 app = Flask(__name__)
 db = SQLAlchemy()
@@ -32,26 +32,16 @@ def welcomepage():
 
 @app.route("/calculator", methods=["POST", "GET"])
 def calculator():
-    if 'weight' in session:
-        
-        session['water_intake'] = drinkingFormula1(float(getWeightmesurement()))
-        return(url_for("yourwaterintake"))
+    form = CalculatorForm()
     if request.method == "POST":
-        session['water'] = float(request.form['input'])
-        session['water_intake'] = drinkingFormula1(float(request.form['input']))
+        session['water_intake'] = drinkingFormula1(form.lbs_or_kg.data,form.weight.data,form.minutes_of_exercise.data)
         return redirect(url_for("yourwaterintake"))
     else:
-        return render_template("base.html")
+        return render_template('base.html', title='WaterIntake', form=form)
+
 
 @app.route("/waterintake", methods=["POST","GET"])
 def yourwaterintake():
-    if 'water_intake' in session:
-        if request.method == "POST":
-            return redirect("/")
-        if request.method == "POST":
-            if request.form['water_detractor']:
-                session['water_intake'] = session['water_intake']-0.4
-
 
     water_intake = session['water_intake']
     return render_template('waterintake.html', water_intake=water_intake)
@@ -83,24 +73,14 @@ def getWeightmesurement():
     #session['weight'] = request.form['weight']
     return request.form['weight']
 
-def drinkingFormula1(weight):
-    water1 = session['water']
-    if "weight" in session:
+def drinkingFormula1(lbs_or_kg,weight,exercise):
 
-        weight = session["weight"]
-        water1 = session['water']
-        if weight == "kg":
-            water = round((water1 * 0.5 * 0.0295735296 * 2.20462262185), 1)
-        else:
-            water = (water1 * 0.5 * 0.029576)
-        return water
+
+    if lbs_or_kg.upper() == "KG":
+        water = round((weight * 0.5 * 0.0295735296 * 2.20462262185), 1) + (exercise*0.01)
     else:
-        weight = getWeightmesurement()
-        if weight == "kg":
-            water = round((water1 * 0.5 * 0.0295735296 * 2.20462262185), 1)
-        else:
-            water = (water1 * 0.5 * 0.029576)
-        return water
+        water = (weight * 0.5 * 0.029576) + (exercise*0.0338)
+    return water
 
 @app.route("/register",methods=["POST","GET"])
 def register():
