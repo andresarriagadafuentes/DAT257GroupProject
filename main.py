@@ -26,8 +26,12 @@ messages = [{'title': 'Welcome!',
              'content': 'Please input the measurements you want to use'}]
 
 
-@app.route("/", methods=["POST", "GET"])
-def login():
+@app.route("/")
+def welcomepage():
+    return render_template("welcome.html")
+
+@app.route("/calculator", methods=["POST", "GET"])
+def calculator():
     if 'weight' in session:
         
         session['water_intake'] = drinkingFormula1(float(getWeightmesurement()))
