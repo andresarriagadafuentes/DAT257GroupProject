@@ -93,14 +93,19 @@ def register():
 
     return render_template('register.html', title='Register', form =form)
 
-@app.route("/login")
+@app.route("/login",methods=["POST","GET"])
 def login1():
     form = LoginForm()
-    return render_template('login.html', title='Login', form =form)
+    if form.validate_on_submit:
+        user = db.select(User).where(User.username == form.username, User.password == form.password)
+        if user is None:
+            return render_template('register.html', title='Register', form =form)
+        else:
+            return render_template('personal/<id>', id = user.id)
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Identity(start=1), primary_key=True)
     username = db.Column(db.String(20), unique=True,nullable=False)
     lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
     weight = db.Column(db.Integer, nullable=False)
