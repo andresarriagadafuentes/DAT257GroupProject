@@ -47,7 +47,7 @@ def yourwaterintake():
     return render_template('waterintake.html', water_intake=water_intake)
 
 
-@app.route('/optimal')
+@app.route('/information_about_water_intake')
 def optimal():
     return render_template("information_about_water_intake.html")
 
@@ -67,9 +67,17 @@ def personal(user):
 
     return render_template("user.html", weight = name)
 
+@app.route('/RiskOfDying')
+def RiskofDying():
+    return render_template("RiskOfDying.html")
+
 @app.route('/information')
 def information():
     return render_template("information_page.html")
+
+@app.route('/too_much_water')
+def too_much_water():
+    return render_template("too_much_water.html")
 
 def getWeightmesurement():
     #session['weight'] = request.form['weight']
