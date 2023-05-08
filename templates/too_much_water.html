@@ -13,6 +13,12 @@
 <body style ="background-color:cornflowerblue">
     <style>
 
+        .hej {
+            position: relative;
+            left: 400px;
+            max-width: 30px;
+            max-height: 30px;
+        }
         header {
             background-color: blue;
             height: 80px;
@@ -22,6 +28,8 @@
             padding: 0 50px;
           }
         
+        
+
           nav ul {
             list-style: none;
             display: flex;
@@ -51,6 +59,7 @@
              <header>
                 <nav>
                   <ul>
+                    <image id= hej src="{{url_for('static', filename='water-drop.png')}}"></image>
                     <li><a href="/">Home</a></li>
                     <li><a href="/login">Personal</a></li>
                     <li><a href="/information">Information</a></li>
@@ -59,7 +68,7 @@
               </header>
               <p>
               </p>
-    <image src="{{url_for('static', filename='water-drop.png')}}">
+    
 </body>
 </html>
 
