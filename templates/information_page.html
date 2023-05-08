@@ -4,7 +4,112 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body style ="background-color:cornflowerblue">
 
+<style>
+
+header {
+    background-color: blue;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 30px;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+  nav img {
+    max-height: 50px;
+  }
+
+
+    .escape {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px;
+
+      float: right;
+      background-color: gainsboro;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+    }
+
+    .undo {
+      font-size: 15px;
+      font-weight: bold;
+      margin: 10px;
+
+      float: right;
+      background-color: cornflowerblue;
+
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+#headline {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px auto;
+    max-width: 500px;
+    text-align: center;
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  
+  </style>
+   <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Personal</a></li>
+        <li><a href="/information">Information</a></li>
+      </ul>
+    </nav>
+  </header>
+
+    <div id="headline">
+        <p> INFORMATION </p>
+    </div>
+
+    <form id="Riskofdying" action="#" method="post" style="text-align:center">
+        <div style="margin-top:100px;">
+          <a href="RiskOfDying">
+            <button type="button" class="btn btn-primary btn-lg" name="Risk of Dying" style="width:1000px;height:100px;background-color:#f5f5f5;color:#0d0a0b;font-weight:bolder;">Risk Of Dying</button>
+          </a>
+        </div>
+
+
+    <form id="Information about water intake" action="#" method="post" style="text-align:center">
+        <div style="margin-top:100px;">
+          <a href="information_about_water_intake">
+            <button type="button" class="btn btn-primary btn-lg" name="Risk of Dying" style="width:1000px;height:100px;background-color:#f5f5f5;color:#0d0a0b;font-weight:bolder;">Information about water intake</button>
+          </a>
+        </div>
 </body>
 </html>

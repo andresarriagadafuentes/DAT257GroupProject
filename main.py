@@ -47,7 +47,7 @@ def yourwaterintake():
     return render_template('waterintake.html', water_intake=water_intake)
 
 
-@app.route('/optimal')
+@app.route('/information_about_water_intake')
 def optimal():
     return render_template("information_about_water_intake.html")
 
@@ -66,6 +66,10 @@ def personal():
             db.session.commit()
 
     return render_template("user.html", weight = name)
+
+@app.route('/RiskOfDying')
+def RiskofDying():
+    return render_template("RiskOfDying.html")
 
 @app.route('/information')
 def information():

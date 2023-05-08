@@ -338,7 +338,7 @@ svg{
           document.getElementById('water-consumed').textContent = waterConsumed.toFixed(2);}
 
         else{
-          if(waterConsumed < totalWaterIntake){
+          if(waterDrank <= totalWaterIntake){
             remainingWaterIntake += waterDrank;}
           if(remainingWaterIntake > totalWaterIntake){
             remainingWaterIntake = parseFloat(totalWaterIntake);
