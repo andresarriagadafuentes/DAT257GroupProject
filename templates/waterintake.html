@@ -113,7 +113,7 @@
           }
         
           nav ul li a:hover {
-            text-decoration: underline;
+            -webkit-text-fill-color: #000000;
             animation: colorchange 1s linear forwards;  
           
           }
@@ -422,6 +422,9 @@ function updatePercent() {
   savedPercent = (waterConsumed / waterGoal) * 100;
   if (savedPercent >= 100) {
     savedPercent = 100;
+  }
+  if (savedPercent >= 0) {
+    savedPercent = 0;
   }
   savedPercent = Math.trunc(savedPercent)
   document.getElementById('percent').textContent = savedPercent + '%';
