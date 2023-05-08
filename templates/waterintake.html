@@ -107,14 +107,21 @@
   }
 
   nav ul li a {
-    color: white;
-    text-decoration: none;
-  }
-
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
-
+            padding: 31px 30px;
+            color: white;
+            text-decoration: none;
+          }
+        
+          nav ul li a:hover {
+            text-decoration: underline;
+            animation: colorchange 1s linear forwards;  
+          
+          }
+        
+          @keyframes colorchange {
+          from {background-color: #0d0a0b}
+          to {background-color: #009fc2}
+          }
   nav img {
     max-height: 50px;
   }
