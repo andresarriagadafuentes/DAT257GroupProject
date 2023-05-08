@@ -106,7 +106,7 @@ def login():
     form = LoginForm()
     if request.method == "POST":
         if form.validate_on_submit:
-            user = db.session.query(User).filter(username = form.username, password = form.password).first()
+            user = User.query.filter(User.username == form.username, User.password == form.password).first()
             if not user:
               return render_template('register.html', title='Register', form =form)
             else:
@@ -116,7 +116,6 @@ def login():
 
 
 class User(db.Model):
-    __name__ = 'user'
     username = db.Column(db.String(20), unique=True,nullable=False, primary_key=True)
     lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
     weight = db.Column(db.Integer, nullable=False)
