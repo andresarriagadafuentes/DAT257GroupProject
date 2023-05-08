@@ -44,14 +44,22 @@ header {
   }
 
   nav ul li a {
-    color: white;
-    text-decoration: none;
-  }
-
+            padding: 39px 30px;
+            color: white;
+            text-decoration: none;
+          }
+        
   nav ul li a:hover {
-    text-decoration: underline;
-  }
-
+            text-decoration: underline;
+            animation: colorchange 1s linear forwards;  
+          
+          }
+        
+ @keyframes colorchange {
+          from {background-color: cornflowerblue;}
+          to {background-color: rgb(22, 57, 126)}
+          }
+          
   nav img {
     max-height: 50px;
   }
