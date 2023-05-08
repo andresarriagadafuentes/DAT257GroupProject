@@ -102,6 +102,7 @@ def login1():
             return render_template('register.html', title='Register', form =form)
         else:
             return render_template('personal/<id>', id = user.id)
+    return render_template('/login', form=form)
 
 
 class User(db.Model):
@@ -110,20 +111,8 @@ class User(db.Model):
     lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post',backref='author', lazy=True)
-
-    def __repr__(self):
-        return f"User('{self.username}')"
 
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100),nullable=False)
-    content = db.Column(db.Text,nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
 class History(db.Model):
     id = db.Column(db.Text, primary_key=True)
     date = db.Column(db.Date, primary_key=True)
