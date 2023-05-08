@@ -102,7 +102,7 @@ def register():
     return render_template('register.html', title='Register', form =form)
 
 @app.route("/login",methods=["POST","GET"])
-def login1():
+def login():
     form = LoginForm()
     if request.method == "POST":
         if form.validate_on_submit:
@@ -111,7 +111,8 @@ def login1():
               return render_template('register.html', title='Register', form =form)
             else:
                 return render_template('personal/<user>', user = user.username)
-    return render_template('/login', title='login', form=form)
+    else:
+        return render_template('login.html', title='login', form=form)
 
 
 class User(db.Model):
