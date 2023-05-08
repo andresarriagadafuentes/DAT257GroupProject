@@ -106,7 +106,7 @@ def login():
     form = LoginForm()
     if request.method == "POST":
         if form.validate_on_submit:
-            user = User.query.filter(User.username == form.username, User.password == form.password).first()
+            user = User.query.filter(User.username == form.username.data, User.password == form.password.data).first()
             if not user:
               return render_template('register.html', title='Register', form =form)
             else:
