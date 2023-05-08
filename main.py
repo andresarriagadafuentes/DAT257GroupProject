@@ -75,6 +75,10 @@ def RiskofDying():
 def information():
     return render_template("information_page.html")
 
+@app.route('/too_much_water')
+def too_much_water():
+    return render_template("too_much_water.html")
+
 def getWeightmesurement():
     #session['weight'] = request.form['weight']
     return request.form['weight']
