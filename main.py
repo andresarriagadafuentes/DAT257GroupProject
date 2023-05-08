@@ -131,9 +131,6 @@ class History(db.Model):
     waterGoal = db.Column(db.Float)
 
 
-
-
-
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
