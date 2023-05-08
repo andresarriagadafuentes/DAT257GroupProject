@@ -5,27 +5,143 @@
     <title>Title</title>
 </head>
 <body>
- <div class="content-section">
+<style>
+      /* Add some basic styling for the body */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: cornflowerblue;
+      }
+
+      #headline {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 40px auto;
+        max-width: 500px;
+        text-align: center;
+        background-color: rgb(78, 111, 179);
+        color: #0d0a0b;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #mainbody {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 40px auto;
+        max-width: 500px;
+        text-align: center;
+        background-color: lightblue;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #viewInput {
+        font-size: 40px;
+        font-weight: bolder;
+        margin: 40px auto;
+        max-width: 500px;
+        text-align: center;
+        background-color: rgb(78, 111, 179);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #viewInput2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 40px auto;
+        max-width: 500px;
+        text-align: center;
+        background-color: rgb(78, 111, 179);
+          color: #0d0a0b;
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-color: antiquewhite;
+      }
+
+
+      header {
+    background-color: cornflowerblue;
+    background-image: linear-gradient(315deg, cornflowerblue 0%, rgb(78, 111, 179) 99%);
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 30px;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  nav ul li a {
+            padding: 39px 30px;
+            color: white;
+            text-decoration: none;
+          }
+
+  nav ul li a:hover {
+            text-decoration: underline;
+            animation: colorchange 1s linear forwards;
+
+          }
+
+ @keyframes colorchange {
+          from {background-color: cornflowerblue;}
+          to {background-color: rgb(22, 57, 126)}
+          }
+            nav img {
+    max-height: 50px;
+  }
+
+      </style>
+    <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Personal</a></li>
+        <li><a href="/information">Information</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+ <div id="viewInput2" class="content-section">
    <form method="POST" action="">
      {{ form.hidden_tag() }}
      <fieldset class="form-group">
        <div class="form-group">
-       {{ form.username.label(class="form-control-label")}}
+       {{ form.username.label(style="color:white;")}}
        {{ form.username(class="form-control form-control-lg")}}
        </div>
         <div class="form-group">
-       {{ form.password.label(class="form-control-label")}}
+       {{ form.password.label(style="color:white;")}}
        {{ form.password(class="form-control form-control-lg")}}
       </div>
          <div class="form-check">
-             {{ form.remember(class="form-check-input")}}
-             {{ form.remember.label(class="form-check-label")}}
+             {{ form.remember(style="color:white;")}}
+             {{ form.remember.label(style="color:white;")}}
          </div>
 
 
      </fieldset>
      <div class="form-group">
-       {{ form.submit(class="btn btn-outline-info")}}
+       {{ form.submit(style="color:white;margin-top:25px;background-color:cornflowerblue;height:40px;width:100px;")}}
      </div>
 
    </form>

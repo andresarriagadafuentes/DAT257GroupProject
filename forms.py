@@ -6,7 +6,7 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2,max=20)])
     lbs_or_kg = StringField('lbs_or_kg',
-                          validators=[DataRequired(), Length(min=2,max=3)])
+                          validators=[DataRequired(),])
 
     weight = IntegerField('Weight',
                           validators=[DataRequired()]

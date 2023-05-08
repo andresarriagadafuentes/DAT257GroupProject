@@ -63,6 +63,12 @@ header {
             <li><a href="/">Home</a></li>
             <li><a href="/login">Personal</a></li>
             <li><a href="/information">Information</a></li>
+              {% if current_user.is_authenticated %}
+              <li><a href="/logout">Logout</a></li>
+              {% else %}
+              <li><a href="/login">Logout</a></li>
+              {% endif %}
+
           </ul>
         </nav>
       </header>

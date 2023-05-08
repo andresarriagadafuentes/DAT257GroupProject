@@ -7,6 +7,10 @@ from datetime import timedelta
 from flask import Flask, redirect, url_for, render_template, request,session,flash
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm, CalculatorForm
+from flask_bcrypt import bcrypt
+from flask_login import LoginManager,UserMixin,login_user, current_user, logout_user, login_required
+
+
 
 app = Flask(__name__)
 db = SQLAlchemy()
@@ -15,11 +19,14 @@ db.init_app(app)
 #app.config["SESSION_PERMANENT"] = False
 #app.config["SESSION_TYPE"] = "filesystem"
 #Session(app)
+login_manager = LoginManager(app)
 
 app.secret_key = "AyyLMAO"
 app.permanent_session_lifetime = timedelta(minutes=5)
 
-
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 messages = [{'title': 'Welcome!',
@@ -52,6 +59,8 @@ def optimal():
     return render_template("information_about_water_intake.html")
 
 
+
+'''
 @app.route('/personal/<user>', methods=["POST","GET"])
 def personal(user):
     if request.method == "POST":
@@ -66,6 +75,7 @@ def personal(user):
             db.session.commit()
 
     return render_template("user.html", weight = name)
+'''
 
 @app.route('/RiskOfDying')
 def RiskofDying():
@@ -94,28 +104,46 @@ def drinkingFormula1(lbs_or_kg,weight,exercise):
 
 @app.route("/register",methods=["POST","GET"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for("/calculator"))
     form = RegistrationForm()
     if form.validate_on_submit():
+        #hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data,lbs_or_kg=form.lbs_or_kg.data,weight=form.weight.data,password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
-        return redirect((url_for('/')))
-
+        return redirect((url_for('/login')))
     return render_template('register.html', title='Register', form =form)
 
 @app.route("/login",methods=["POST","GET"])
 def login():
     form = LoginForm()
-    if request.method == "POST":
-        if form.validate_on_submit:
-            user = User.query.filter(User.username == form.username.data, User.password == form.password.data).first()
-            if not user:
-              return render_template('register.html', title='Register', form =form)
-            else:
-                return render_template('personal/<user>', user = user.username)
-    else:
-        return render_template('login.html', title='login', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for("/calculator"))
+    if form.validate_on_submit:
+        user = User.query.filter_by(username=form.username.data,password=form.username.data).first()
+        if not user:
+            flash('Login Unsuccessful, please register a user with that name.')
+        else:
+            login_user(user,remember=form.remember.data)
+            return redirect((url_for('/calculator')))
+    return render_template('login.html', title='login', form=form)
 
 
-class User(db.Model):
+@app.route("/personal",methods=["POST","GET"])
+@login_required
+def personal():
+
+    return redirect((url_for('calculator')))
+
+@app.route("/logout")
+def logout():
+    logout.user()
+    return redirect((url_for("calculator")))
+
+
+class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True,nullable=False, primary_key=True)
     lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
     weight = db.Column(db.Integer, nullable=False)
