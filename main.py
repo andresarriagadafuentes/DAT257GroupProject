@@ -52,11 +52,11 @@ def optimal():
     return render_template("information_about_water_intake.html")
 
 
-@app.route('/personal/<id>', methods=["POST","GET"])
-def personal():
+@app.route('/personal/<user>', methods=["POST","GET"])
+def personal(user):
     if request.method == "POST":
         name = db.get_or_404(User, id)
-        found_user = User.query.filter_by(id = login).first()
+        found_user = User.query.filter_by(id = user).first()
         if found_user:
             session["name"] = found_user.name
 
@@ -102,27 +102,29 @@ def register():
     return render_template('register.html', title='Register', form =form)
 
 @app.route("/login",methods=["POST","GET"])
-def login1():
+def login():
     form = LoginForm()
-    if form.validate_on_submit:
-        user = db.select(User).where(User.username == form.username, User.password == form.password)
-        if user is None:
-            return render_template('register.html', title='Register', form =form)
-        else:
-            return render_template('personal/<id>', id = user.id)
-    return render_template('/login', form=form)
+    if request.method == "POST":
+        if form.validate_on_submit:
+            user = db.session.query(User).filter(username = form.username, password = form.password).first()
+            if not user:
+              return render_template('register.html', title='Register', form =form)
+            else:
+                return render_template('personal/<user>', user = user.username)
+    else:
+        return render_template('login.html', title='login', form=form)
 
 
 class User(db.Model):
-    id = db.Column(db.Identity(start=1), primary_key=True)
-    username = db.Column(db.String(20), unique=True,nullable=False)
+    __name__ = 'user'
+    username = db.Column(db.String(20), unique=True,nullable=False, primary_key=True)
     lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
 
 class History(db.Model):
-    id = db.Column(db.Text, primary_key=True)
+    user = db.Column(db.Text, primary_key=True)
     date = db.Column(db.Date, primary_key=True)
     waterIntake = db.Column(db.Float)
     waterGoal = db.Column(db.Float)
