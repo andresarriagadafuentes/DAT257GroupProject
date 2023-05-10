@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Length, EqualTo
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2,max=20)])
-    lbs_or_kg = StringField('lbs_or_kg',
+    lbs_or_kg = StringField('lbs or kg',
                           validators=[DataRequired(),])
 
     weight = IntegerField('Weight',

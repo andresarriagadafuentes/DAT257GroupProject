@@ -2,7 +2,7 @@ import math
 import string
 from datetime import timedelta
 
-
+import flask_login
 from flask import Flask, redirect, url_for, render_template, request,session,flash
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm, CalculatorForm
@@ -12,21 +12,19 @@ from flask_login import LoginManager,UserMixin,login_user, current_user, logout_
 
 
 app = Flask(__name__)
-db = SQLAlchemy()
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
+db = SQLAlchemy()
 db.init_app(app)
-#app.config["SESSION_PERMANENT"] = False
-#app.config["SESSION_TYPE"] = "filesystem"
-#Session(app)
+
 login_manager = LoginManager(app)
 
 app.secret_key = "AyyLMAO"
 app.permanent_session_lifetime = timedelta(minutes=5)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
 
 messages = [{'title': 'Welcome!',
              'content': 'Please input the measurements you want to use'}]
@@ -39,9 +37,15 @@ def welcomepage():
 @app.route("/calculator", methods=["POST", "GET"])
 def calculator():
     form = CalculatorForm()
+    if request.method == 'GET':
+        if current_user.is_authenticated:
+            user = flask_login.current_user
+            form.lbs_or_kg.data = user.lbs_or_kg
+            form.weight.data = user.weight
     if request.method == "POST":
         session['water_intake'] = drinkingFormula1(form.lbs_or_kg.data,form.weight.data,form.minutes_of_exercise.data)
         return redirect(url_for("yourwaterintake"))
+
     else:
         return render_template('base.html', title='WaterIntake', form=form)
 
@@ -103,30 +107,31 @@ def drinkingFormula1(lbs_or_kg,weight,exercise):
 
 @app.route("/register",methods=["POST","GET"])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for("/calculator"))
+    #if current_user.is_authenticated:
+    #    return redirect(url_for("/calculator"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        #hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data,lbs_or_kg=form.lbs_or_kg.data,weight=form.weight.data,password=form.password.data)
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
-        return redirect((url_for('/login')))
-    return render_template('register.html', title='Register', form =form)
+        return redirect((url_for('login')))
+    return render_template('register.html', title='Register', form=form)
 
 @app.route("/login",methods=["POST","GET"])
 def login():
     form = LoginForm()
     if current_user.is_authenticated:
-        return redirect(url_for("/calculator"))
-    if form.validate_on_submit:
-        user = User.query.filter_by(username=form.username.data,password=form.username.data).first()
-        if not user:
-            flash('Login Unsuccessful, please register a user with that name.')
+        return redirect(url_for("calculator"))
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        password = form.password.data
+        if password == user.password:
+            login_user(user, remember=form.remember.data)
+            return redirect((url_for('welcomepage')))
         else:
-            login_user(user,remember=form.remember.data)
-            return redirect((url_for('/calculator')))
+            flash('Login Unsuccessful, please register a user with that name.')
     return render_template('login.html', title='login', form=form)
 
 
@@ -137,16 +142,25 @@ def personal():
     return redirect((url_for('calculator')))
 
 @app.route("/logout")
+@login_required
 def logout():
-    logout.user()
-    return redirect((url_for("calculator")))
+    logout_user()
+    return redirect((url_for("welcomepage")))
+
+
 
 
 class User(db.Model, UserMixin):
-    username = db.Column(db.String(20), unique=True,nullable=False, primary_key=True)
-    lbs_or_kg = db.Column(db.String(20),unique=True,nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True,nullable=False)
+    lbs_or_kg = db.Column(db.String(20),nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(60), nullable=False)
+
+    def __repr__(self):
+        return f"User('{self.username}','{self.lbs_or_kg}','{self.weight}','{self.password}')"
+
+
 
 
 class History(db.Model):
