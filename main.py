@@ -52,7 +52,6 @@ def calculator():
 
 @app.route("/waterintake", methods=["POST","GET"])
 def yourwaterintake():
-
     water_intake = session['water_intake']
     return render_template('waterintake.html', water_intake=water_intake)
 
@@ -127,10 +126,14 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         password = form.password.data
-        if password == user.password:
-            login_user(user, remember=form.remember.data)
-            return redirect((url_for('welcomepage')))
+        if user is not None:
+            if password == user.password:
+                login_user(user, remember=form.remember.data)
+                return redirect((url_for('welcomepage')))
+            else:
+                flash('Login Unsuccessful, please register a user with that name.')
         else:
+            print("hej")
             flash('Login Unsuccessful, please register a user with that name.')
     return render_template('login.html', title='login', form=form)
 
