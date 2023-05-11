@@ -52,6 +52,7 @@ def calculator():
 
 @app.route("/waterintake", methods=["POST","GET"])
 def yourwaterintake():
+
     water_intake = session['water_intake']
     return render_template('waterintake.html', water_intake=water_intake)
 
@@ -133,7 +134,6 @@ def login():
             else:
                 flash('Login Unsuccessful, please register a user with that name.')
         else:
-            print("hej")
             flash('Login Unsuccessful, please register a user with that name.')
     return render_template('login.html', title='login', form=form)
 
