@@ -63,22 +63,26 @@ def optimal():
 
 
 
-'''
+
 @app.route('/personal/<user>', methods=["POST","GET"])
 def personal(user):
-    if request.method == "POST":
-        name = db.get_or_404(User, id)
-        found_user = User.query.filter_by(id = user).first()
-        if found_user:
-            session["name"] = found_user.name
+    if current_user.is_authenticated():
+        if request.method == "POST":
+            name = request.form.get('name')
+            weight = request.form.get('weight')
+            password = request.form.get('password')
+            user = User.query.get(name)
+            if user:
+                user.name = name
+                user.weight = weight
+                user.password = password
+                db.session.commit()
+        history = History.query.filter_by(name).order_by(history.date.desc()).limit(7).all()
+        return render_template("user.html", user = name, water_intake_history = history)
+    else:
+        return redirect((url_for('login')))
 
-        else:
-            usr = User(id,"")
-            db.session.add(usr)
-            db.session.commit()
 
-    return render_template("user.html", weight = name)
-'''
 
 @app.route('/RiskOfDying')
 def RiskofDying():
@@ -138,11 +142,6 @@ def login():
     return render_template('login.html', title='login', form=form)
 
 
-@app.route("/personal",methods=["POST","GET"])
-@login_required
-def personal():
-
-    return redirect((url_for('calculator')))
 
 @app.route("/logout")
 @login_required

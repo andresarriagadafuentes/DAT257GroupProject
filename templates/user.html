@@ -1,14 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Personal page</title>
-  <form action="#" method="POST">
-    <input type="weight" name="weight" placeholder="Enter weight" value="{{weight if weight}}">
-    <input type="submit" value="submit">
-  </form>
+  <title>User Info Update</title>
+  <style>
+    body {
+      background-color: #3498db;
+      color: white;
+      text-align: center;
+    }
+    form {
+      display: inline-block;
+      margin-top: 20px;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 80%;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #2980b9;
+    }
+    tr:nth-child(even) {
+      background-color: #1c84c6;
+    }
+  </style>
 </head>
 <body>
+  <h1>User Info Update</h1>
+  <form action="update" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
 
+    <label for="weight">Weight:</label>
+    <input type="number" id="weight" name="weight" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <input type="submit" value="Update">
+  </form>
+
+  <h2>Water Intake History</h2>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Recommended Intake</th>
+      <th>Actual Intake</th>
+    </tr>
+    {% for entry in water_intake_history %}
+      <tr>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.waterGoal }}</td>
+        <td>{{ entry.waterIntake }}</td>
+      </tr>
+  </table>
 </body>
 </html>
