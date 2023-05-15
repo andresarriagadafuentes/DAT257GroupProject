@@ -65,7 +65,8 @@ def optimal():
 
 
 @app.route('/personal/<user>', methods=["POST","GET"])
-def personal(user):
+def personal():
+    user = current_user
     if current_user.is_authenticated():
         if request.method == "POST":
             name = request.form.get('name')
@@ -77,7 +78,7 @@ def personal(user):
                 user.weight = weight
                 user.password = password
                 db.session.commit()
-        history = History.query.filter_by(name).order_by(history.date.desc()).limit(7).all()
+        history = History.query.filter_by(user).order_by(history.date.desc()).limit(7).all()
         return render_template("user.html", user = name, water_intake_history = history)
     else:
         return redirect((url_for('login')))
@@ -126,7 +127,7 @@ def register():
 def login():
     form = LoginForm()
     if current_user.is_authenticated:
-        return redirect(url_for("calculator"))
+        return redirect(url_for("personal"))
 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
