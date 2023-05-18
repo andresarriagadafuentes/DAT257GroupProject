@@ -9,7 +9,7 @@ from forms import RegistrationForm, LoginForm, CalculatorForm
 from flask_bcrypt import bcrypt
 from flask_login import LoginManager,UserMixin,login_user, current_user, logout_user, login_required
 
-
+user1 = current_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
@@ -24,7 +24,7 @@ app.permanent_session_lifetime = timedelta(minutes=5)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.filter_by(id = user_id).first()
 
 messages = [{'title': 'Welcome!',
              'content': 'Please input the measurements you want to use'}]
@@ -66,8 +66,8 @@ def optimal():
 
 @app.route('/personal/', methods=["POST","GET"])
 def personal():
-    user = current_user
     if current_user.is_authenticated:
+        user = flask_login.current_user
         if request.method == "POST":
             name = request.form.get('name')
             weight = request.form.get('weight')
@@ -78,8 +78,8 @@ def personal():
                 user.weight = weight
                 user.password = password
                 db.session.commit()
-        history = History.query.filter_by(user = user.username).order_by(History.date.desc()).limit(7).all()
-        return render_template("user.html", user = user.username, water_intake_history = history)
+        history = History.query.filter_by(user = user1.username).order_by(History.date.desc()).limit(7).all()
+        return render_template("user.html", user = user1.username, water_intake_history = history)
     else:
         return redirect((url_for('login')))
 
@@ -135,6 +135,7 @@ def login():
         if user is not None:
             if password == user.password:
                 login_user(user, remember=form.remember.data)
+                user1 = user
                 return redirect((url_for('welcomepage')))
             else:
                 flash('Login Unsuccessful, please register a user with that name.')
