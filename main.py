@@ -86,6 +86,7 @@ def personal():
                 user.name = name
                 user.weight = weight
                 user.password = password
+                db.session.update(user)
                 db.session.commit()
         history = History.query.filter_by(user = user1.username).order_by(History.date.desc()).limit(7).all()
         return render_template("user.html", user = user1.username, water_intake_history = history)
