@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm, CalculatorForm
 from flask_bcrypt import bcrypt
 from flask_login import LoginManager,UserMixin,login_user, current_user, logout_user, login_required
+import random
 
 user1 = current_user
 
@@ -44,6 +45,11 @@ def calculator():
             form.weight.data = user.weight
     if request.method == "POST":
         session['water_intake'] = drinkingFormula1(form.lbs_or_kg.data,form.weight.data,form.minutes_of_exercise.data)
+        intake = drinkingFormula1(form.lbs_or_kg.data,form.weight.data,form.minutes_of_exercise.data)
+        user = flask_login.current_user
+        hist = History(user=user.username, waterGoal=intake, waterIntake=random.randrange(intake-1,intake+1), date= db.func.current_date())
+        db.session.add(hist)
+        db.session.commit()
         return redirect(url_for("yourwaterintake"))
 
     else:
