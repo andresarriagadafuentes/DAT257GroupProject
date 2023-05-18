@@ -47,7 +47,7 @@ def calculator():
         session['water_intake'] = drinkingFormula1(form.lbs_or_kg.data,form.weight.data,form.minutes_of_exercise.data)
         intake = drinkingFormula1(form.lbs_or_kg.data,form.weight.data,form.minutes_of_exercise.data)
         user = flask_login.current_user
-        hist = History(user=user.username, waterGoal=intake, waterIntake=random.randrange(intake-1,intake+1), date= db.func.current_date())
+        hist = History(user=user.username, waterGoal=intake, waterIntake=random.uniform(intake-1,intake+1), date= db.func.current_date())
         db.session.add(hist)
         db.session.commit()
         return redirect(url_for("yourwaterintake"))
