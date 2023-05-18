@@ -52,7 +52,7 @@ def calculator():
             db.session.add(hist)
             db.session.commit()
         except:
-            db.session.commit()
+            db.session.rollback()
         return redirect(url_for("yourwaterintake"))
 
     else:
