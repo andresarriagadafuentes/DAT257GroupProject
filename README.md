@@ -4,7 +4,7 @@ Group 9 project in DAT257.
 ReadMe
 
 To run the product you must first make sure that you have all following flask libraries.
--	flask_login  
+-	flask 
 -	flask_sqlalchemy
 -	flask_bcrypt
 -	flask_login
