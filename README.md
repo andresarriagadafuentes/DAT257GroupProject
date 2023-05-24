@@ -18,3 +18,13 @@ you also might require installing python 3.11 from Microsoft store if it still d
 Install all the libraries and you should be able to run the program.
 
 When running the program, the console should print out a HTTPS link you can copy.
+
+Team members:
+August Gustafsson Dillner
+Andres Arriagada Fuentes
+Mattias Lind
+Isak Borovac
+Max Larssen Magnusson
+
+Invitation to our trello board:
+https://trello.com/invite/b/JUxJSEeT/ATTI46d11d29272a77549ccf52fa006e76a698C5CADA/main-project
